@@ -1,0 +1,78 @@
+:root {
+    --red: rgb(255 0 0);
+    --blue: rgb(0 0 255);
+    --greenishColour: rgb(176, 246, 176);
+}
+
+body {
+    background-color: bisque;
+    height: 100vh;
+}
+
+#main {
+    display: none;
+}
+
+div:has(.modalStartButton) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-body {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+table {
+    background-color: var(--greenishColour);
+}
+
+td {
+    height: 28px;
+    width: 28px;
+}
+
+.prize {
+    background-color: var(--red);
+}
+
+.trap {
+    background-color: var(--blue);
+}
+
+.cell {
+    background-color: var(--greenishColour);
+}
+
+.prize-legend, .trap-legend {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    padding: 1em;
+    text-align: center;
+}
+
+.prize-legend {
+    background-color: var(--red);
+    margin-bottom: 0.2em;
+}
+
+.trap-legend {
+    background-color: var(--blue);
+}
+
+/* MEDIA QUERIES */
+
+@media (width >= 280px) {
+    .prize-legend,
+    .trap-legend {
+        width: 30%;
+    }
+}
+
+@media (width >= 580px) {
+    .prize-legend,
+    .trap-legend {
+        width: 12%;
+    }
+}
