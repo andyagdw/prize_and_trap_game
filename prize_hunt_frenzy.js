@@ -1,23 +1,26 @@
-// Random time a cell will become a prize or trap after 'generatePrizeOrATrapCell' function called
-function getRandomTimeInterval() {
+// Random time a cell will become a prize or a trap after 'generatePrizeOrATrapCell' function called
+const getRandomTimeInterval = () => {
     let min = Math.ceil(500);
     let max = Math.floor(2500);
     return Math.floor(Math.random()*(max-min+1) + min);
 }
 
-function getRandomCellIndex() {  // Selecting random cell (table is 20x20 = 400)
+// Selecting a random table cell (table is 20x20 = 400)
+const getRandomCellIndex = () => {
     let min = Math.ceil(0);
     let max = Math.floor(399);
     return Math.floor(Math.random()*(max-min+1) + min);
 }
 
-function getRandomDuration(minTime, maxTime) {  // Random time a cell will stay as prize or a trap
+// Random time a cell will stay as a prize or a trap
+const getRandomDuration = (minTime, maxTime) => {
     let min = Math.ceil(minTime);
     let max = Math.floor(maxTime);
     return Math.floor(Math.random()*(max-min+1) + min);
 }
 
-function getDifficultylevelTimes(difficultyLevel) {  // Set difficult level times
+// Get difficulty level times based on user choice
+const getDifficultylevelTimes = difficultyLevel => {
     let difficultyTimes;
     switch (difficultyLevel) {
         case 'Easy':
@@ -36,52 +39,62 @@ function getDifficultylevelTimes(difficultyLevel) {  // Set difficult level time
 }
 
 /////////////////////////
-const scoreText = document.querySelector('.score');
-const timeText = document.querySelector('.time');
+const scoreParaElement = document.querySelector('.score');
+const timeParaElement = document.querySelector('.time');
 const main = document.getElementById("main");
 // The higher the number, the more prizes and traps will be on the board
 const frequencyOfPrizesAndTraps = 200;
+const numOfSecondsGameLasts = 30;
+const initialScore = 0;
+const increaseScoreNum = 3;
+const decreaseScoreNum = -100;
+const endGameNum = 0;
+const scoreText = "Score:";
+const timeRemainingText = "Time remaining:";
+
 let gameFinished = false;
 let counter;  // Declare the timer
-let score = 0;
-let timer = 30;
+let score = initialScore;
+let timer = numOfSecondsGameLasts;
 
 /////////////////////////
-let myDiv = document.getElementById("game-board-div");  // Create table
-let table = document.createElement('table');
+const myDiv = document.getElementById("game-board-div");  // Create table
+const table = document.createElement('table');
 table.className = "mx-auto";
 myDiv.appendChild(table);
 
-let tbody = document.createElement('tbody');  // Create table body
-let tableBody = table.appendChild(tbody);
+const tbody = document.createElement('tbody');  // Create table body
+table.appendChild(tbody);
 
-for (i = 0; i < 20; i++) {  // Create 20 table rows and inside each table row, create 20 table cells
-    let tr = document.createElement('tr'); 
-    tableBody.appendChild(tr);
+// Create 20 table rows and inside each table row, create 20 table cells
+for (i = 0; i < 20; i++) {
+    let tableRow = document.createElement('tr'); 
+    tbody.appendChild(tableRow);
     for (let x = 0; x < 20; x++) {
-            let td = document.createElement('td');
-            tr.appendChild(td);
-            td.className = "cell";
+            let tableCell = document.createElement('td');
+            tableRow.appendChild(tableCell);
+            tableCell.className = "cell";
         }
     };
 
 /////////////////////////
-function increaseOrDecreaseScore(tableCell) {
+const increaseOrDecreaseScore = tableCell => {
     if (gameFinished === false && tableCell.className === "prize") {
-        score+=3;
-        scoreText.innerHTML = `Score: ${score}`;
+        score+=increaseScoreNum;
+        scoreParaElement.innerHTML = `${scoreText} ${score}`;
         tableCell.className = "cell";
     } else if (gameFinished === false && tableCell.className === "trap") {
-        score = -100;
-        scoreText.innerHTML = `Score: ${score}`;
+        score = decreaseScoreNum;
+        scoreParaElement.innerHTML = `${scoreText} ${score}`;
         clearInterval(counter);
         endGame();
     }
 }
 
 /////////////////////////
-function endGame() {
+const endGame = () => {
     gameFinished = true;
+
     // Create 'game over' row and text
     let buttonContainer = document.createElement("div");
     buttonContainer.className = "pt-3";
@@ -101,6 +114,7 @@ function endGame() {
     gameOverContainer.style.fontWeight = "700";
     gameOverContainer.style.fontSize = "2rem";
     gameOverContainer.style.textAlign = "center";
+
     // Add newly created elements to the document
     buttonContainer.appendChild(button);
     gameOverContainer.appendChild(buttonContainer);
@@ -108,77 +122,91 @@ function endGame() {
     row.appendChild(column);
     main.appendChild(row);
 }
+
+/////////////////////////
+const countdown = () => {  // Timer
+    counter = setInterval(() => {
+        if (timer === endGameNum || score === decreaseScoreNum) {
+            clearInterval(counter);
+            endGame();
+        }
+        timeParaElement.innerHTML = `${timeRemainingText} ${timer}s`;
+        timer--;
+    }, 1000);
+}
     
 /////////////////////////
-function startGame() {
-    scoreText.innerHTML = `Score: ${score}`;
-    timeText.innerHTML = `Time remaining: ${timer}s`;
-    generatePrizeTrapCells();  // Start creating prize and trap cells
-    countdown();  // Start timer
-}
+const generatePrizeOrATrapCell = () => {
+  let difficultyLevel = document.forms[0].elements.difficulty.value;
+  let difficultyLevelTimes = getDifficultylevelTimes(difficultyLevel);
 
-function generatePrizeTrapCells() {
+  if (Math.random() <= 0.6) {
+    // 60% chance to become a prize
+    // Select a random table cell on the board
+    let prizeCell = document.getElementsByTagName("td")[getRandomCellIndex()];
+    prizeCell.className = "prize"; // Make it a prize
+    prizeCell.setAttribute("onclick", "increaseOrDecreaseScore(this)");
+    setTimeout(() => {
+      // After x num of seconds let it become empty again
+      prizeCell.removeAttribute("onclick", "increaseOrDecreaseScore(this)");
+      prizeCell.classList.remove("prize");
+      prizeCell.classList.add("cell");
+    }, getRandomDuration(difficultyLevelTimes[0], difficultyLevelTimes[1]));
+  } else {
+    let trapCell = document.getElementsByTagName("td")[getRandomCellIndex()];
+    trapCell.className = "trap";
+    trapCell.setAttribute("onclick", "increaseOrDecreaseScore(this)");
+    setTimeout(() => {
+      trapCell.removeAttribute("onclick", "increaseOrDecreaseScore(this)");
+      trapCell.classList.remove("trap");
+      trapCell.classList.add("cell");
+    }, getRandomDuration(difficultyLevelTimes[0], difficultyLevelTimes[1]));
+  }
+};
+
+const generatePrizeTrapCells = () => {
   for (let i = 0; i < frequencyOfPrizesAndTraps; i++) {
-    // Will loop 'freq' times and call this function for every loop
+    // Will loop 'frequencyOfPrizesAndTraps' times and call this function for every loop
     setTimeout(generatePrizeOrATrapCell, getRandomTimeInterval());
   }
   // After looping call 'generatePrizeTrapCells' again after 2secs
   let loopPrizeTrapCells = setTimeout(generatePrizeTrapCells, 2000);
-  if (timer === 0 || score === -100) {
+  if (timer === endGameNum || score === decreaseScoreNum) {
     clearTimeout(loopPrizeTrapCells);
   }
-}
-
-function generatePrizeOrATrapCell() {
-
-    let difficultyLevel = document.forms[0].elements.difficulty.value;
-    let difficultyLevelTimes = getDifficultylevelTimes(difficultyLevel);
-
-    if (Math.random() <= 0.6) {  // 60% chance to become a prize
-        // Select a random table cell on the board
-        let prizeCell = document.getElementsByTagName('td')[getRandomCellIndex()];
-        prizeCell.className = "prize";  // Make it a prize
-        prizeCell.setAttribute('onclick', 'increaseOrDecreaseScore(this)')
-        setTimeout(function () {  // After 1-1.8secs let it become empty again
-            prizeCell.removeAttribute('onclick', 'increaseOrDecreaseScore(this)');
-            prizeCell.classList.remove('prize');
-            prizeCell.classList.add('cell');
-        }, getRandomDuration(difficultyLevelTimes[0], difficultyLevelTimes[1]));
-    } else {
-        let trapCell = document.getElementsByTagName('td')[getRandomCellIndex()];
-        trapCell.className = "trap";
-        trapCell.setAttribute('onclick', 'increaseOrDecreaseScore(this)');
-        setTimeout(function () {
-          trapCell.removeAttribute("onclick", "increaseOrDecreaseScore(this)");
-          trapCell.classList.remove("trap");
-          trapCell.classList.add("cell");
-        }, getRandomDuration(difficultyLevelTimes[0], difficultyLevelTimes[1]));
-    }
-}
+};
 
 /////////////////////////
-function countdown() {  // Timer
-    counter = setInterval(function () {
-        if (timer === 0 || score === -100) {
-            clearInterval(counter);
-            endGame();
-        }
-        timeText.innerHTML = `Time remaining: ${timer}s`;
-        timer--;
-    }, 1000);
+const startGame = () => {
+    scoreParaElement.innerHTML = `${scoreText} ${score}`;
+    timeParaElement.innerHTML = `${timeRemainingText} ${timer}s`;
+    generatePrizeTrapCells();  // Start creating prize and trap cells
+    countdown();  // Start timer
+}
+
+const restartGame = () => {
+    let gameOverRow = document.querySelector(".game-over-row");
+    main.removeChild(gameOverRow);  // Remove game over row, including its text
+    gameFinished = false;
+    score = initialScore;
+    timer = numOfSecondsGameLasts;
 }
 
 /////////////////////////
 const modalForm = document.querySelector(".modal-form");
+
 modalForm.addEventListener("submit", e => {
     let difficultyLevel = document.forms[0].elements.difficulty.value;
-    if (!difficultyLevel) {  // Check if a difficult level was chosen
+
+    if (!difficultyLevel) {  // Check if a difficult level was chosen by the user
         return alert("Please enter a difficulty level");
     }
     if (gameFinished) {  // Only call restart game function when a game has been played
         restartGame();
     }
+
     let modalDivButton = document.querySelector(".modal-div-button");
+    // Remove start button after user submits form the first time
     if (modalDivButton.style.display !== "none") {
         modalDivButton.style.display = "none";
         main.style.display = "block";
@@ -186,12 +214,3 @@ modalForm.addEventListener("submit", e => {
     e.preventDefault();
     startGame();
 });
-
-/////////////////////////
-function restartGame() {
-    let gameOverRow = document.querySelector(".game-over-row");
-    main.removeChild(gameOverRow);  // Remove game over row, including its text
-    gameFinished = false;
-    score = 0;
-    timer = 30;
-}
