@@ -5,14 +5,14 @@ It was initially a university coding task that has been enhanced to include mult
 
 ## Game Description 📋
 
-**Objective**: Collect as many prizes as possible within 30 seconds. <br>
-**Game Board**: A 20x20 grid where prizes and traps randomly appear. <br>
+**Objective**: Collect as many prizes as possible within 30 seconds <br>
+**Game Board**: A 20x20 grid where prizes and traps randomly appear <br>
 **Gameplay**:
-* Prizes and traps appear at random positions and intervals.
-* Prizes and traps stay on the board for a random duration.
-* Clicking on a prize increases your score by 3 points.
-* Clicking on a trap ends the game immediately with a score of -100.
-* The game ends automatically after 30 seconds.
+* Prizes and traps appear at random positions and intervals
+* Prizes and traps stay on the board for a random duration
+* Clicking on a prize increases your score by 3 points
+* Clicking on a trap ends the game immediately with a score of -100
+* The game ends automatically after 30 seconds
 
 ## Difficulty levels 📈
 
@@ -30,10 +30,10 @@ traps and collect prizes.
 
 Follow these simple steps to get started with the game:
 
-1. Clone the repository to your local machine: <br />
+1. Clone the repository to your local machine: <br>
    `git clone https://github.com/andyagdw/prize_and_trap_game.git`
 
-2. Navigate to the project directory: <br />
+2. Navigate to the project directory: <br>
    `cd prize_and_trap_game`
 
 3. Open `prize_hunt_frenzy.html` with live server.
