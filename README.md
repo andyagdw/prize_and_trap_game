@@ -6,7 +6,7 @@ It was initially a university coding task that has been enhanced to include mult
 ## Game Description 📋
 
 **Objective**: Collect as many prizes as possible within 30 seconds <br>
-**Game Board**: A 20x20 grid where prizes and traps randomly appear <br>
+**Game Board**: A 15x15 grid (this can be adjusted to suit your needs!) where prizes and traps randomly appear <br>
 **Gameplay**:
 * Prizes and traps appear at random positions and intervals
 * Prizes and traps stay on the board for a random duration
