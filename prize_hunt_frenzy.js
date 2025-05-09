@@ -52,7 +52,7 @@ const decreaseScoreNum = -100;
 const endGameNum = 0;
 const scoreText = "Score:";
 const timeRemainingText = "Time remaining:";
-const sizeOfBoard = 15;
+const sizeOfBoard = 12;
 
 let gameFinished = false;
 let counter;  // Declare the timer
@@ -94,11 +94,11 @@ const increaseOrDecreaseScore = tableCell => {
 }
 
 /////////////////////////
-const checkTableOutline = () => {
+const checkTableOpacity = () => {
     // Create red outline on table if trap was pressed
     if (score === decreaseScoreNum) {
         const table = document.querySelector("table");
-        table.style.outline = "4px solid rgb(238 14 29)";
+        table.style.filter = "opacity(50%)";
     }
 }
 
@@ -134,7 +134,7 @@ const endGame = () => {
     const column = document.createElement("div");
     column.className = "col-md-5 mx-auto";
     const gameOverContainer = createGameOverContainer();
-    checkTableOutline();
+    checkTableOpacity();
     // Add newly created elements to the document
     buttonContainer.appendChild(button);
     gameOverContainer.appendChild(buttonContainer);
@@ -211,10 +211,10 @@ const resetGame = () => {
     gameFinished = false;
     score = initialScore;
     timer = numOfSecondsGameLasts;
-    // Remove red table outline if present
+    // Remove red table blur if present
     const table = document.querySelector("table");
-    if (table.style.outline) {
-        table.style.outline = "";
+    if (table.style.filter) {
+        table.style.filter = "";
     }
 }
 
