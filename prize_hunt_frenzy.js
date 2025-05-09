@@ -94,29 +94,47 @@ const increaseOrDecreaseScore = tableCell => {
 }
 
 /////////////////////////
-const endGame = () => {
-    gameFinished = true;
+const checkTableOutline = () => {
+    // Create red outline on table if trap was pressed
+    if (score === decreaseScoreNum) {
+        const table = document.querySelector("table");
+        table.style.outline = "4px solid rgb(238 14 29)";
+    }
+}
 
-    // Create 'game over' row and text
-    const buttonContainer = document.createElement("div");
-    buttonContainer.className = "pt-3";
+const createPlayAgainBtn = () => {
     const button = document.createElement("button");
     button.setAttribute("type", "button");
     button.setAttribute("data-bs-toggle", "modal");
     button.setAttribute("data-bs-target", "#myModal");
     button.className = "btn btn-primary py-2 px-3 fs-5";
     button.innerHTML = "Play Again?";
-    const row = document.createElement("div");
-    row.className = "row game-over-row-js";
-    const column = document.createElement("div");
-    column.className = "col-md-5 mx-auto";
+    return button;
+}
+
+const createGameOverContainer = () => {
     const gameOverContainer = document.createElement("div");
     gameOverContainer.className = "p-3";
     gameOverContainer.innerHTML = `Game over. Your score is ${score}`;
     gameOverContainer.style.fontWeight = "700";
     gameOverContainer.style.fontSize = "2rem";
     gameOverContainer.style.textAlign = "center";
+    return gameOverContainer;
+}
 
+/////////////////////////
+const endGame = () => {
+    gameFinished = true;
+    // Create 'game over' row and text
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "pt-3";
+    const button = createPlayAgainBtn();
+    const row = document.createElement("div");
+    row.className = "row game-over-row-js";
+    const column = document.createElement("div");
+    column.className = "col-md-5 mx-auto";
+    const gameOverContainer = createGameOverContainer();
+    checkTableOutline();
     // Add newly created elements to the document
     buttonContainer.appendChild(button);
     gameOverContainer.appendChild(buttonContainer);
@@ -187,12 +205,17 @@ const startGame = () => {
     countdown();  // Start timer
 }
 
-const restartGame = () => {
+const resetGame = () => {
     const gameOverRow = document.querySelector(".game-over-row-js");
     main.removeChild(gameOverRow);  // Remove game over row, including its text
     gameFinished = false;
     score = initialScore;
     timer = numOfSecondsGameLasts;
+    // Remove red table outline if present
+    const table = document.querySelector("table");
+    if (table.style.outline) {
+        table.style.outline = "";
+    }
 }
 
 /////////////////////////
@@ -206,11 +229,11 @@ modalForm.addEventListener("submit", e => {
         return alert("Please enter a difficulty level");
     }
     if (gameFinished) {  // Only call restart game function when a game has been played
-        restartGame();
+        resetGame();
     }
 
     const modalDivButton = document.querySelector(".modal-start-button-js");
-    // Remove start button after user submits form the first time
+    // Remove start button after user submits form for the first time
     if (modalDivButton.style.display !== "none") {
         modalDivButton.style.display = "none";
         main.style.display = "block";
