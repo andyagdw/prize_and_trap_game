@@ -40,8 +40,8 @@ const getDifficultylevelTimes = difficultyLevel => {
 }
 
 /////////////////////////
-const scoreParaElement = document.querySelector('.score');
-const timeParaElement = document.querySelector('.time');
+const scoreParaElement = document.querySelector('.score-js');
+const timeParaElement = document.querySelector('.time-js');
 const main = document.querySelector("main");
 // The higher the number, the more prizes and traps will be on the board
 const frequencyOfPrizesAndTraps = 200;
@@ -52,7 +52,7 @@ const decreaseScoreNum = -100;
 const endGameNum = 0;
 const scoreText = "Score:";
 const timeRemainingText = "Time remaining:";
-const sizeOfBoard = 15;  // Adjust to suit your needs!
+const sizeOfBoard = 15;
 
 let gameFinished = false;
 let counter;  // Declare the timer
@@ -60,7 +60,7 @@ let score = initialScore;
 let timer = numOfSecondsGameLasts;
 
 /////////////////////////
-const gameBoard = document.getElementById("game-board-div");  // Create table
+const gameBoard = document.getElementById("game-board-div-js");  // Create table
 const table = document.createElement('table');
 table.className = "mx-auto";
 gameBoard.appendChild(table);
@@ -107,7 +107,7 @@ const endGame = () => {
     button.className = "btn btn-primary py-2 px-3 fs-5";
     button.innerHTML = "Play Again?";
     const row = document.createElement("div");
-    row.className = "row game-over-row";
+    row.className = "row game-over-row-js";
     const column = document.createElement("div");
     column.className = "col-md-5 mx-auto";
     const gameOverContainer = document.createElement("div");
@@ -188,7 +188,7 @@ const startGame = () => {
 }
 
 const restartGame = () => {
-    const gameOverRow = document.querySelector(".game-over-row");
+    const gameOverRow = document.querySelector(".game-over-row-js");
     main.removeChild(gameOverRow);  // Remove game over row, including its text
     gameFinished = false;
     score = initialScore;
@@ -209,7 +209,7 @@ modalForm.addEventListener("submit", e => {
         restartGame();
     }
 
-    const modalDivButton = document.querySelector(".modal-start-button");
+    const modalDivButton = document.querySelector(".modal-start-button-js");
     // Remove start button after user submits form the first time
     if (modalDivButton.style.display !== "none") {
         modalDivButton.style.display = "none";
