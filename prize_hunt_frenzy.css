@@ -82,3 +82,14 @@ td {
 .trap-legend {
     background-color: var(--clr-blue);
 }
+
+.new-personal-best-text {
+    font-style: italic;
+    background: linear-gradient(to bottom right, var(--clr-red), var(--clr-blue));
+    background-clip: text;
+    color: transparent;
+}
+
+.timer-score-wrapper {
+    line-height: 0.8;
+}

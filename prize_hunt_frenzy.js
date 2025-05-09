@@ -42,6 +42,7 @@ const getDifficultylevelTimes = difficultyLevel => {
 /////////////////////////
 const scoreParaElement = document.querySelector('.score-js');
 const timeParaElement = document.querySelector('.time-js');
+const bestScoreElement = document.querySelector(".best-score-js");
 const main = document.querySelector("main");
 // The higher the number, the more prizes and traps will be on the board
 const frequencyOfPrizesAndTraps = 200;
@@ -52,15 +53,17 @@ const decreaseScoreNum = -100;
 const endGameNum = 0;
 const scoreText = "Score:";
 const timeRemainingText = "Time remaining:";
+const bestScoreText = "Best score:"
 const sizeOfBoard = 12;
 
+let userDifficultyLevel;
 let gameFinished = false;
 let counter;  // Declare the timer
 let score = initialScore;
 let timer = numOfSecondsGameLasts;
 
 /////////////////////////
-const gameBoard = document.getElementById("game-board-div-js");  // Create table
+const gameBoard = document.getElementById("game-board-wrapper-js");  // Create table
 const table = document.createElement('table');
 table.className = "mx-auto";
 gameBoard.appendChild(table);
@@ -94,12 +97,49 @@ const increaseOrDecreaseScore = tableCell => {
 }
 
 /////////////////////////
-const checkTableOpacity = () => {
-    // Create red outline on table if trap was pressed
-    if (score === decreaseScoreNum) {
-        const table = document.querySelector("table");
-        table.style.filter = "opacity(50%)";
+// Local Storage Key
+const bestScoreKey = difficulty => `prizeHuntFrenzy_best_${difficulty}`;
+
+// May throw in some private-browsing modes
+const storageAvailable = () => {
+    try {
+        const testKey = "__storage_test__";
+        localStorage.setItem(testKey, testKey);
+        localStorage.removeItem(testKey);
+        return true;
+    } catch (e) {
+        return false;
     }
+}
+
+const getBestScore = () => {
+    if (!storageAvailable()) return;
+    try {
+        return localStorage.getItem(bestScoreKey(userDifficultyLevel)) ?? 0;
+    } catch (e) {
+        console.warn("Could not read best score from localstorage", e);
+        return 0;
+    }
+}
+
+const setBestScore = () => {
+    if (!storageAvailable()) return false;
+    const bestScore = localStorage.getItem(bestScoreKey(userDifficultyLevel)) ?? 0;
+    if (score <= bestScore) return false;
+    try {
+        localStorage.setItem(bestScoreKey(userDifficultyLevel), score);
+        // User has set a new best
+        return true;
+    } catch (e) {
+        console.warn("Could not save best score to local storage", e);
+        return false;
+    }
+}
+/////////////////////////
+const updateTableOpacity = () => {
+    // Create red outline on table if trap was pressed
+    const table = document.querySelector("table");
+    table.style.filter = "opacity(50%)";
 }
 
 const createPlayAgainBtn = () => {
@@ -112,19 +152,29 @@ const createPlayAgainBtn = () => {
     return button;
 }
 
-const createGameOverContainer = () => {
-    const gameOverContainer = document.createElement("div");
-    gameOverContainer.className = "p-3";
-    gameOverContainer.innerHTML = `Game over. Your score is ${score}`;
-    gameOverContainer.style.fontWeight = "700";
-    gameOverContainer.style.fontSize = "2rem";
-    gameOverContainer.style.textAlign = "center";
-    return gameOverContainer;
-}
+const createGameOverContainer = (userHasSetANewBest) => {
+  const gameOverContainer = document.createElement("div");
+  const gameOverText = document.createElement("p");
+  gameOverContainer.style.textAlign = "center";
+  gameOverContainer.className = "p-3";
+  gameOverText.innerHTML = `Game over. Your score is ${score}`;
+  gameOverText.style.fontWeight = "700";
+  gameOverText.style.fontSize = "2rem";
+  
+  if (userHasSetANewBest && score !== decreaseScoreNum) {
+    gameOverText.innerHTML = `${gameOverText.innerHTML}. <span class="new-personal-best-text">New Personal Best!</span>`;   
+    gameOverContainer.appendChild(gameOverText);
+  } else {
+    gameOverContainer.appendChild(gameOverText);
+  }
+  return gameOverContainer;
+};
 
 /////////////////////////
 const endGame = () => {
     gameFinished = true;
+    const userHasSetANewBest = setBestScore();
+    updateTableOpacity();
     // Create 'game over' row and text
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "pt-3";
@@ -133,8 +183,7 @@ const endGame = () => {
     row.className = "row game-over-row-js";
     const column = document.createElement("div");
     column.className = "col-md-5 mx-auto";
-    const gameOverContainer = createGameOverContainer();
-    checkTableOpacity();
+    const gameOverContainer = createGameOverContainer(userHasSetANewBest);
     // Add newly created elements to the document
     buttonContainer.appendChild(button);
     gameOverContainer.appendChild(buttonContainer);
@@ -201,6 +250,7 @@ const generatePrizeTrapCells = () => {
 const startGame = () => {
     scoreParaElement.innerHTML = `${scoreText} ${score}`;
     timeParaElement.innerHTML = `${timeRemainingText} ${timer}s`;
+    bestScoreElement.innerHTML = `${bestScoreText} ${getBestScore(userDifficultyLevel)}`;
     generatePrizeTrapCells();  // Start creating prize and trap cells
     countdown();  // Start timer
 }
@@ -224,8 +274,8 @@ const modalForm = document.getElementById("modal-form");
 modalForm.addEventListener("submit", e => {
     e.preventDefault();
 
-    const difficultyLevel = document.forms[0].elements.difficulty.value;
-    if (!difficultyLevel) {  // Check if a difficult level was chosen by the user
+    userDifficultyLevel = document.forms[0].elements.difficulty.value;
+    if (!userDifficultyLevel) {  // Check if a difficult level was chosen by the user
         return alert("Please enter a difficulty level");
     }
     if (gameFinished) {  // Only call restart game function when a game has been played
