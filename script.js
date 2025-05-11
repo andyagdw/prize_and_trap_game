@@ -47,7 +47,7 @@ const scoreParaElement = document.querySelector(".score-js");
 const timeParaElement = document.querySelector(".time-js");
 const bestScoreElement = document.querySelector(".best-score-js");
 const main = document.querySelector("main");
-// The higher the number, the more prizes and traps will quickly appear and disappear on the board
+// The higher the number, the more prizes and traps will quickly appear and disappear on the game board
 const frequencyOfPrizesAndTraps = 50;
 const numOfSecondsGameLasts = 30;
 const initialScore = 0;
@@ -90,11 +90,11 @@ for (i = 0; i < sizeOfBoard; i++) {
 const increaseOrDecreaseScore = tableCell => {
   if (gameFinished === false && tableCell.className === "prize") {
     score += increaseScoreNum;
-    scoreParaElement.innerHTML = `${scoreText} ${score}`;
+    scoreParaElement.textContent = score;
     tableCell.className = "cell";
   } else if (gameFinished === false && tableCell.className === "trap") {
     score = decreaseScoreNum;
-    scoreParaElement.innerHTML = `${scoreText} ${score}`;
+    scoreParaElement.textContent = score;
     clearInterval(counter);
     endGame();
   }
@@ -205,7 +205,7 @@ const countdown = () => {
       clearInterval(counter);
       endGame();
     }
-    timeParaElement.innerHTML = `${timeRemainingText} ${timer}s`;
+    timeParaElement.textContent = `${timer}s`;
     timer--;
   }, 1000);
 };
@@ -254,11 +254,9 @@ const generatePrizeTrapCells = () => {
 
 /////////////////////////
 const startGame = () => {
-  scoreParaElement.innerHTML = `${scoreText} ${score}`;
-  timeParaElement.innerHTML = `${timeRemainingText} ${timer}s`;
-  bestScoreElement.innerHTML = `${bestScoreText} ${getBestScore(
-    userDifficultyLevel
-  )}`;
+  scoreParaElement.textContent = score;
+  timeParaElement.textContent = `${timer}s`;
+  bestScoreElement.textContent = getBestScore(userDifficultyLevel);
   generatePrizeTrapCells(); // Start creating prize and trap cells
   countdown(); // Start timer
 };
@@ -284,7 +282,7 @@ modalForm.addEventListener("submit", e => {
 
   userDifficultyLevel = document.forms[0].elements.difficulty.value;
   if (!userDifficultyLevel) {
-    // Check if a difficult level was chosen by the user
+    // Check if a difficulty level was chosen by the user
     return alert("Please enter a difficulty level");
   }
   if (gameFinished) {
@@ -293,7 +291,7 @@ modalForm.addEventListener("submit", e => {
   }
 
   const modalWrapper = document.querySelector(".modal-wrapper");
-  // Remove start button after user submits form for the first time
+  // Remove wrapper (e.g., for start button, reset, and scores) after user submits form for the first time
   if (modalWrapper.style.display !== "none") {
     modalWrapper.style.display = "none";
     main.style.display = "block";
@@ -306,11 +304,11 @@ const resetBtn = document.getElementById("reset-btn");
 // Represents whether the user has any scores in localstorage
 let flag = 0;
 if (!storageAvailable()) {
-  // Show a score of 0 is localstorage not available
+  // Show a score of 0 if localstorage not available
   resetBtn.setAttribute("disabled", true);
   for (let difficultyLevel of difficultyLevelArr) {
     const scoreText = document.getElementById(`${difficultyLevel}-score-js`);
-    scoreText.innerHTML = `${difficultyLevel}: 0`;
+    scoreText.textContent += " 0";
   }
 } else {
   // Show scores saved in local storage
@@ -320,7 +318,7 @@ if (!storageAvailable()) {
       flag = 1;
     }
     const scoreText = document.getElementById(`${difficultyLevel}-score-js`);
-    scoreText.innerHTML = `${difficultyLevel}: ${getBestScore(difficultyLevel)}`;
+    scoreText.textContent += ` ${getBestScore(difficultyLevel)}`;
   }
   if (flag === 0) {
     resetBtn.setAttribute("disabled", true);
