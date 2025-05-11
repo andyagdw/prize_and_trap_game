@@ -28,13 +28,13 @@ const getDifficultylevelTimes = difficultyLevel => {
   let difficultyTimes;
   switch (difficultyLevel) {
     case difficultyLevelArr[0]:
-      difficultyTimes = [2100, 2900];
+      difficultyTimes = [3100, 3900];
       return difficultyTimes;
     case difficultyLevelArr[1]:
-      difficultyTimes = [1000, 1800];
+      difficultyTimes = [2000, 2800];
       return difficultyTimes;
     case difficultyLevelArr[2]:
-      difficultyTimes = [500, 900];
+      difficultyTimes = [600, 1000];
       return difficultyTimes;
     case difficultyLevelArr[3]:
       difficultyTimes = [300, 700];
@@ -47,8 +47,8 @@ const scoreParaElement = document.querySelector(".score-js");
 const timeParaElement = document.querySelector(".time-js");
 const bestScoreElement = document.querySelector(".best-score-js");
 const main = document.querySelector("main");
-// The higher the number, the more prizes and traps will be on the board
-const frequencyOfPrizesAndTraps = 200;
+// The higher the number, the more prizes and traps will quickly appear and disappear on the board
+const frequencyOfPrizesAndTraps = 50;
 const numOfSecondsGameLasts = 30;
 const initialScore = 0;
 const increaseScoreNum = 3;
@@ -162,12 +162,12 @@ const createGameOverContainer = userHasSetANewBest => {
   const gameOverText = document.createElement("p");
   gameOverContainer.style.textAlign = "center";
   gameOverContainer.className = "p-3";
-  gameOverText.innerHTML = `Game over. Your score is ${score}`;
+  gameOverText.innerHTML = `Game over. Your score is ${score}.`;
   gameOverText.style.fontWeight = "700";
   gameOverText.style.fontSize = "2rem";
 
   if (userHasSetANewBest && score !== decreaseScoreNum) {
-    gameOverText.innerHTML = `${gameOverText.innerHTML}. <span class="new-personal-best-text">New Personal Best!</span>`;
+    gameOverText.innerHTML = `${gameOverText.innerHTML} <span class="new-personal-best-text">New Personal Best!</span>`;
     gameOverContainer.appendChild(gameOverText);
   } else {
     gameOverContainer.appendChild(gameOverText);
@@ -324,7 +324,7 @@ resetBtn.addEventListener("click", () => {
     console.warn("localstorage not available; cannot reset scores");
     return;
   }
-  difficultyLevelArr.forEach((difficultyLevel) => {
+  difficultyLevelArr.forEach(difficultyLevel => {
     localStorage.removeItem(bestScoreKey(difficultyLevel));
   });
   resetBtn.setAttribute("disabled", true);
