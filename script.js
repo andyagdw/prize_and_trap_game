@@ -76,7 +76,7 @@ const tbody = document.createElement("tbody");
 table.appendChild(tbody);
 
 // Create 'sizeOfBoard' table rows and inside each table row, create 'sizeOfBoard' table cells
-for (i = 0; i < sizeOfBoard; i++) {
+for (let i = 0; i < sizeOfBoard; i++) {
   const tableRow = document.createElement("tr");
   tbody.appendChild(tableRow);
   for (let x = 0; x < sizeOfBoard; x++) {
