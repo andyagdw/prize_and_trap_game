@@ -3,6 +3,10 @@
 This project is a dynamic and engaging web-based game developed using HTML, CSS, and JavaScript.
 It was initially a university coding task that has been enhanced to include multiple difficulty levels. Play the game [here](https://prize-hunt-frenzy.netlify.app/).
 
+## The User Interface 🔍
+
+![Screenshot 2025-05-11 144106](https://github.com/user-attachments/assets/e179c41d-6b48-489e-afdc-58b260d22ff3)
+
 ## Game Description 📋
 
 **Objective**: Collect as many prizes as possible within 30 seconds <br>
