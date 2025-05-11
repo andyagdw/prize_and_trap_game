@@ -43,3 +43,8 @@ Follow these simple steps to get started with the game:
 
 If you have any questions or just want to connect, you can reach me on
 [LinkedIn](https://www.linkedin.com/in/andyagyeidwumah/) 👍.
+
+## License
+
+All contents of this repository are © 2025 Andy Agyei-Dwumah. All rights reserved.  
+No part of this project may be used, copied, modified or distributed without explicit written permission.
