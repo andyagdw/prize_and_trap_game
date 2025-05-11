@@ -24,7 +24,7 @@ const getRandomDuration = (minTime, maxTime) => {
 const difficultyLevelArr = ["Easy", "Medium", "Hard", "Extreme"];
 
 // Get difficulty level times based on user choice
-const getDifficultylevelTimes = (difficultyLevel) => {
+const getDifficultylevelTimes = difficultyLevel => {
   let difficultyTimes;
   switch (difficultyLevel) {
     case difficultyLevelArr[0]:
@@ -66,12 +66,13 @@ let score = initialScore;
 let timer = numOfSecondsGameLasts;
 
 /////////////////////////
-const gameBoard = document.getElementById("game-board-wrapper-js"); // Create table
+// Create table
+const gameBoard = document.getElementById("game-board-wrapper-js");
 const table = document.createElement("table");
 table.className = "mx-auto";
 gameBoard.appendChild(table);
 
-const tbody = document.createElement("tbody"); // Create table body
+const tbody = document.createElement("tbody");
 table.appendChild(tbody);
 
 // Create 'sizeOfBoard' table rows and inside each table row, create 'sizeOfBoard' table cells
@@ -86,7 +87,7 @@ for (i = 0; i < sizeOfBoard; i++) {
 }
 
 /////////////////////////
-const increaseOrDecreaseScore = (tableCell) => {
+const increaseOrDecreaseScore = tableCell => {
   if (gameFinished === false && tableCell.className === "prize") {
     score += increaseScoreNum;
     scoreParaElement.innerHTML = `${scoreText} ${score}`;
@@ -101,7 +102,7 @@ const increaseOrDecreaseScore = (tableCell) => {
 
 /////////////////////////
 // Local Storage Key
-const bestScoreKey = (difficulty) => `prizeHuntFrenzy_best_${difficulty}`;
+const bestScoreKey = difficulty => `prizeHuntFrenzy_best_${difficulty}`;
 
 // May throw in some private-browsing modes
 const storageAvailable = () => {
@@ -141,7 +142,7 @@ const setBestScore = () => {
 };
 /////////////////////////
 const updateTableOpacity = () => {
-  // Create red outline on table if trap was pressed
+  // Update opacity when game ends
   const table = document.querySelector("table");
   table.style.filter = "opacity(50%)";
 };
@@ -156,7 +157,7 @@ const createPlayAgainBtn = () => {
   return button;
 };
 
-const createGameOverContainer = (userHasSetANewBest) => {
+const createGameOverContainer = userHasSetANewBest => {
   const gameOverContainer = document.createElement("div");
   const gameOverText = document.createElement("p");
   gameOverContainer.style.textAlign = "center";
@@ -268,7 +269,7 @@ const resetGame = () => {
   gameFinished = false;
   score = initialScore;
   timer = numOfSecondsGameLasts;
-  // Remove red table blur if present
+  // Remove table blur if present
   const table = document.querySelector("table");
   if (table.style.filter) {
     table.style.filter = "";
@@ -278,7 +279,7 @@ const resetGame = () => {
 /////////////////////////
 const modalForm = document.getElementById("modal-form");
 
-modalForm.addEventListener("submit", (e) => {
+modalForm.addEventListener("submit", e => {
   e.preventDefault();
 
   userDifficultyLevel = document.forms[0].elements.difficulty.value;
