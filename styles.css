@@ -1,7 +1,9 @@
 :root {
     --clr-red: rgb(238 14 29); /* #ee0e1d */
+    --clr-bg-red: rgb(253 99 109); /* #fd636d */
     --clr-blue: rgb(82 82 246); /* #5252f6 */
-    --clr-green: rgb(176 246 176);
+    --clr-bg-blue: rgb(144, 144, 228); /* #9090e4 */
+    --clr-green: rgb(176 246 176); /* #b0f6b0 */
 }
 
 @layer reset {
@@ -79,12 +81,12 @@ td {
 }
 
 .prize-legend {
-    background-color: var(--clr-red);
+    background-color: var(--clr-bg-red);
     margin-block-end: 0.2em;
 }
 
 .trap-legend {
-    background-color: var(--clr-blue);
+    background-color: var(--clr-bg-blue);
 }
 
 .new-personal-best-text {
