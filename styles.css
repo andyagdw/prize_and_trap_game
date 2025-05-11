@@ -38,7 +38,11 @@ main {
     transform: translate(-50%, -50%);
 }
 
-.modal-wrapper button {
+.reset-btn-wrapper {
+    text-align: center;
+}
+
+.start-btn {
     width: 100%;
 }
 
