@@ -76,24 +76,34 @@
   <body>
     <!-- Button trigger modal -->
     <div class="modal-wrapper">
-      <div class="mb-3 py-2">
-        <button
-          type="button"
-          class="btn btn-primary py-2 fs-3"
-          data-bs-toggle="modal"
-          data-bs-target="#myModal"
-        >
-          Start
-        </button>
-      </div>
       <div>
-        <button
-          type="button"
-          id="reset-btn"
-          class="btn btn-secondary py-1 fs-5"
-        >
-          Reset scores?
-        </button>
+        <div class="mb-3">
+          <button
+            type="button"
+            class="btn btn-primary py-2 fs-3"
+            data-bs-toggle="modal"
+            data-bs-target="#myModal"
+          >
+            Start
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            id="reset-btn"
+            class="btn btn-secondary py-1 fs-5"
+          >
+            Reset scores?
+          </button>
+        </div>
+        <div class="scores-wrapper mt-5 p-4">
+          <h1 class="mb-3">Your scores</h1>
+          <!-- Capitalisation is necessary here to allow easy access in JS file -->
+          <p id="Easy-score-js"></p>
+          <p id="Medium-score-js"></p>
+          <p id="Hard-score-js"></p>
+          <p id="Extreme-score-js"></p>
+        </div>
       </div>
     </div>
     <!-- End Button trigger modal -->

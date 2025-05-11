@@ -116,10 +116,10 @@ const storageAvailable = () => {
   }
 };
 
-const getBestScore = () => {
-  if (!storageAvailable()) return;
+const getBestScore = (difficultyLevel = userDifficultyLevel) => {
+  if (!storageAvailable()) return 0;
   try {
-    return localStorage.getItem(bestScoreKey(userDifficultyLevel)) ?? 0;
+    return localStorage.getItem(bestScoreKey(difficultyLevel)) ?? 0;
   } catch (e) {
     console.warn("Could not read best score from localstorage", e);
     return 0;
@@ -306,13 +306,21 @@ const resetBtn = document.getElementById("reset-btn");
 // Represents whether the user has any scores in localstorage
 let flag = 0;
 if (!storageAvailable()) {
+  // Show a score of 0 is localstorage not available
   resetBtn.setAttribute("disabled", true);
+  for (let difficultyLevel of difficultyLevelArr) {
+    const scoreText = document.getElementById(`${difficultyLevel}-score-js`);
+    scoreText.innerHTML = `${difficultyLevel}: 0`;
+  }
 } else {
+  // Show scores saved in local storage
   for (let difficultyLevel of difficultyLevelArr) {
     if (localStorage.getItem(bestScoreKey(difficultyLevel)) !== null) {
       // User has scores saved in localstorage
       flag = 1;
     }
+    const scoreText = document.getElementById(`${difficultyLevel}-score-js`);
+    scoreText.innerHTML = `${difficultyLevel}: ${getBestScore(difficultyLevel)}`;
   }
   if (flag === 0) {
     resetBtn.setAttribute("disabled", true);
@@ -325,7 +333,14 @@ resetBtn.addEventListener("click", () => {
     return;
   }
   difficultyLevelArr.forEach(difficultyLevel => {
+    // Remove all scores in localstorage
     localStorage.removeItem(bestScoreKey(difficultyLevel));
+    // Reset scores to 0 (for scores that were not 0)
+    const scoreText = document.getElementById(`${difficultyLevel}-score-js`);
+    const bestScore = getBestScore(difficultyLevel);
+    if (bestScore === 0) {
+      scoreText.innerHTML = `${difficultyLevel}: 0`;
+    }
   });
   resetBtn.setAttribute("disabled", true);
 });

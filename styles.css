@@ -42,6 +42,12 @@ main {
     width: 100%;
 }
 
+.scores-wrapper {
+    text-align: center;
+    background: radial-gradient(circle at 100%, var(--clr-bg-blue), var(--clr-green));
+    border-radius: 0.5rem;
+}
+
 .input-wrapper {
     display: flex;
     justify-content: space-evenly;
