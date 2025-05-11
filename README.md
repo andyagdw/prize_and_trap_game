@@ -30,25 +30,13 @@ The game includes four difficulty levels that affect how long prizes and traps r
 The easier the difficulty level, the longer the prizes and traps stay on the board, making it easier to avoid
 traps and collect prizes.
 
-## Getting started ✅
+## License
 
-Follow these simple steps to get started with the game:
-
-1. Clone the repository to your local machine: <br>
-   `git clone https://github.com/andyagdw/prize_and_trap_game.git`
-
-2. Navigate to the project directory: <br>
-   `cd prize_and_trap_game`
-
-3. Open `prize_hunt_frenzy.html` with live server.
+All contents of this repository are © 2025 Andy Agyei-Dwumah. All rights reserved.  
+No part of this project may be used, copied, modified or distributed without explicit written permission.
 
 ## Credits
 ### Contact
 
 If you have any questions or just want to connect, you can reach me on
 [LinkedIn](https://www.linkedin.com/in/andyagyeidwumah/) 👍.
-
-## License
-
-All contents of this repository are © 2025 Andy Agyei-Dwumah. All rights reserved.  
-No part of this project may be used, copied, modified or distributed without explicit written permission.
