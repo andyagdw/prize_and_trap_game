@@ -1,7 +1,7 @@
 # Prize Hunt Frenzy 💥
 
 This project is a dynamic and engaging web-based game developed using HTML, CSS, and JavaScript.
-It was initially a university coding task that has been enhanced to include multiple difficulty levels.
+It was initially a university coding task that has been enhanced to include multiple difficulty levels. Play the game [here](https://prize-hunt-frenzy.netlify.app/).
 
 ## Game Description 📋
 
