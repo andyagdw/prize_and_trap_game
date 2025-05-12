@@ -4,6 +4,7 @@
     --clr-blue: rgb(82 82 246); /* #5252f6 */
     --clr-bg-blue: rgb(144 144 228); /* #9090e4 */
     --clr-green: rgb(176 246 176); /* #b0f6b0 */
+    --border-radius: 0.5rem;
 }
 
 @layer reset {
@@ -31,25 +32,23 @@ main {
     display: none;
 }
 
-.modal-wrapper {
+.start-page-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: min(90%, 500px);
 }
 
+.start-btn-wrapper,
 .reset-btn-wrapper {
     text-align: center;
-}
-
-.start-btn {
-    width: 100%;
 }
 
 .scores-wrapper {
     text-align: center;
     background: radial-gradient(circle at 100%, var(--clr-bg-blue), var(--clr-green));
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
 }
 
 .input-wrapper {
@@ -108,4 +107,33 @@ td {
 
 .timer-score-wrapper {
     line-height: 0.8;
+}
+
+.how-to-play-btn-wrapper {
+    margin-block-start: 3em;
+    text-align: center;
+}
+
+.how-to-play-btn:focus-visible {
+    outline: 4px solid var(--clr-bg-blue);
+}
+
+.game-instructions-list > li {
+    margin-block-end: 1em;
+    position: relative;
+    list-style-type: none;
+}
+
+.game-instructions-list > li::before{
+    content: "\25A0";
+    font-size: 1.2rem;
+    margin-inline-end: 0.5em;
+}
+
+.game-instructions-list > li:nth-child(even)::before {
+    color: var(--clr-red);
+}
+
+.game-instructions-list > li:nth-child(odd)::before {
+    color: var(--clr-blue);
 }

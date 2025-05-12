@@ -148,7 +148,7 @@ const createPlayAgainBtn = () => {
   const button = document.createElement("button");
   button.setAttribute("type", "button");
   button.setAttribute("data-bs-toggle", "modal");
-  button.setAttribute("data-bs-target", "#myModal");
+  button.setAttribute("data-bs-target", "#select-difficulty-modal");
   button.className = "btn btn-primary py-2 px-3 fs-5";
   button.innerHTML = "Play Again?";
   return button;
@@ -287,7 +287,7 @@ modalForm.addEventListener("submit", e => {
     resetGame();
   }
 
-  const modalWrapper = document.querySelector(".modal-wrapper");
+  const modalWrapper = document.querySelector(".start-page-wrapper");
   // Remove wrapper (e.g., for start button, reset, and scores) after user submits form for the first time
   if (modalWrapper.style.display !== "none") {
     modalWrapper.style.display = "none";
