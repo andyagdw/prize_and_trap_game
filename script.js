@@ -54,9 +54,6 @@ const initialScore = 0;
 const increaseScoreNum = 3;
 const decreaseScoreNum = -100;
 const endGameNum = 0;
-const scoreText = "Score:";
-const timeRemainingText = "Time remaining:";
-const bestScoreText = "Best score:";
 const sizeOfBoard = 12;
 
 let userDifficultyLevel;
