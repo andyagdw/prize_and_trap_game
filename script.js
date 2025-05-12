@@ -144,7 +144,7 @@ const setBestScore = () => {
 const updateTableOpacity = () => {
   // Update opacity when game ends
   const table = document.querySelector("table");
-  table.style.filter = "opacity(50%)";
+  table.style.filter = "opacity(40%)";
 };
 
 const createPlayAgainBtn = () => {
@@ -247,7 +247,7 @@ const generatePrizeTrapCells = () => {
   }
   // After looping call 'generatePrizeTrapCells' again after 2secs
   let loopPrizeTrapCells = setTimeout(generatePrizeTrapCells, 2000);
-  if (timer === endGameNum || score === decreaseScoreNum) {
+  if (gameFinished || score === decreaseScoreNum) {
     clearTimeout(loopPrizeTrapCells);
   }
 };
