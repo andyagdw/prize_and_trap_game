@@ -28,7 +28,7 @@ const getDifficultylevelTimes = difficultyLevel => {
   let difficultyTimes;
   switch (difficultyLevel) {
     case difficultyLevelArr[0]:
-      difficultyTimes = [3100, 3900];
+      difficultyTimes = [3500, 4200];
       return difficultyTimes;
     case difficultyLevelArr[1]:
       difficultyTimes = [2000, 2800];
